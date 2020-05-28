@@ -1,0 +1,234 @@
+{% set baseUrl = 'static/icons'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{type}} search | Intelligent Document Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static' , filename = 'searchbyText.css')}}">
+
+
+
+
+
+</head>
+<body onload="seeif2()">
+
+
+
+
+    <div class="just_the_outer">
+
+        <p class="upper_conatiner_p_top">
+            Showing results for <b>{{ new_query }}</b>
+        </p>
+    {% if new_query != old_query %}
+    <div class="upper_container">
+        <p class="upper_conatiner_p">
+            Instead of <b>{{ old_query }}</b>
+        </p>
+    </div>
+    {% endif %}
+    
+    
+        <div class="output_outer_container">
+            
+            {% for i in range(0, title_len)  %}
+                {% set length = tags[i]|length %}
+
+                <div class="output_holder">
+                    <div class="output">
+                        <div class="file_extension_ico">
+                            <div class="img_holder">
+<!--                                <img src="{{ url_for('static' , filename='icons/docx.svg') }}" alt="" srcset="">-->
+                                <img src="{{ baseUrl }}/{{extension_list[i] ~ '.svg'}}" alt="" srcset="">
+
+                            </div>
+                        </div>
+
+                        <div class="text">
+                            <div class="heading" id="heading">
+
+                                <form action="/filenameonclick" , method="POST">
+                                    <input type="text" onchange="seeif()"  name="file_head" class="thehiddenforminput"  id="thehiddenform">
+                                    <button type="submit" id="myclassnameid" name="myclassname" class="myclassname" value="{{ title[i] }}"><b>Title: </b><span>{{ title[i] }}</span></button>
+                                </form>
+                            </div>
+
+                            <div class="original_text">
+                              <b style="font-size: 2.2vh">Text: </b>  {{ text[i] }}
+                            </div>
+                            <div class="tags">
+
+                                <div class="tag_container">
+                                    <div style="padding: 1vh 1vh;"><b>Tags: </b></div>
+                                    <div class="final_tags">
+                                        {% for j in range(0, length-1)  %}
+                                            <div class="the_tag">
+                                                <li>{{ tags[i][j] ~ ", " }}</li>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="summary">
+                            <p style="text-align:center; font-weight: 500; font-size: 2.3vh">Summary</p>
+                            {{ summaries[i] }}
+
+                            <div class="show_similar_holder">
+                                <input type="text" id="theInput" class="theInput" name="theInput">
+                                <button type="submit" class="submitButton" id="submitButton">Show similar documents</button>
+                                
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+
+                </div>
+            {% endfor %}
+        </div>
+
+        
+
+    </div>
+
+
+    <br><br><br>
+
+
+
+
+
+        <!-- footer starts -->
+ <!--     <div class="footer">
+        <div class="footer_1">   </div>
+        <br>
+        <div class="footer_social_media"> 
+            <ul>
+                <li><a href="#"><img src="{{url_for('static' , filename='icons/facebook (copy)2.svg')}}" alt="" srcset=""></a></li>
+                <li><a href="#"><img src="{{url_for('static' , filename='icons/twitter (copy)2.svg')}}" alt="" srcset=""></a></li>
+                <li><a href="#"><img src="{{url_for('static' , filename='icons/linkedin (copy)2.svg')}}" alt="" srcset=""></a></li>
+                <li><a href="#"><img src="{{url_for('static' , filename='icons/github-image (copy)2.svg')}}" alt="" srcset=""></a></li>
+                
+            </ul>
+        </div>
+    </div>
+
+-->
+
+
+<!-- footer ends -->
+
+<div class="show_similar_overlay" id="show_similar_overlay">
+
+
+    <div class="close_overlay">
+        <div class="title_holder">
+            Showing results similar to: <span id="show_similar_span" class="show_similar_span">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+        </div>
+        <div class="button_holder">
+            <button onclick="close_overlay()" class="close_overlay_button"><img class="close_overlay_icon" src="{{ url_for('static', filename='cross.svg') }}"></button>
+        </div>
+
+    
+    </div>
+
+
+    <div class="output_outer_container">
+            
+        {% for i in range(0, title_len)  %}
+            {% set length = tags[i]|length %}
+
+            <div class="output_holder">
+                <div class="output">
+                    <div class="file_extension_ico">
+                        <div class="img_holder">
+<!--                                <img src="{{ url_for('static' , filename='icons/docx.svg') }}" alt="" srcset="">-->
+                            <img src="{{ baseUrl }}/{{extension_list[i] ~ '.svg'}}" alt="" srcset="">
+
+                        </div>
+                    </div>
+
+                    <div class="text">
+                        <div class="heading" id="heading">
+
+                            <form action="/filenameonclick" , method="POST">
+                                <input type="text" onchange="seeif()"  name="file_head" class="thehiddenforminput"  id="thehiddenform">
+                                <button type="submit" id="myclassnameid" name="myclassname" class="myclassname" value="{{ title[i] }}"><b>Title: </b><span>{{ title[i] }}</span></button>
+                            </form>
+                        </div>
+
+                        <div class="original_text">
+                          <b style="font-size: 2.2vh">Text: </b>  {{ text[i] }}
+                        </div>
+                        <div class="tags">
+
+                            <div class="tag_container">
+                                <div style="padding: 1vh 1vh;"><b>Tags: </b></div>
+                                <div class="final_tags">
+                                    {% for j in range(0, length-1)  %}
+                                        <div class="the_tag">
+                                            <li>{{ tags[i][j] ~ ", " }}</li>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="summary">
+                        <p style="text-align:center; font-weight: 500; font-size: 2.3vh">Summary</p>
+                        {{ summaries[i] }}
+                        
+                    </div>
+
+                </div>
+
+                
+               
+
+
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+</body>
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='searchByTextScript.js') }}"></script>
+
+
+
+
+<script>
+
+    function title_fetcher(){
+        var file_title = document.getElementById('heading_onclick').innerHTML;
+        //console.log(file_title);
+    }
+
+
+
+    function seeif2(){
+        let alldiv = document.getElementsByClassName('myclassname');
+        //console.log(alldiv);
+        alldivlen = alldiv.length;
+        for(var q = 0; q< alldivlen ; q++){
+            //console.log(alldiv[q].innerHTML);
+        }
+    }
+
+
+    document.getElementById('myclassnameid').style.display = "";
+
+</script>
+</html>

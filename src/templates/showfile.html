@@ -1,0 +1,29 @@
+{{ tempdiv }}
+
+
+
+<body onload="DelayRedirect()">
+    
+    <br />
+    <br />
+    <div id="dvCountDown" style = "display:none">
+    You will be redirected after <span id = "lblCount"></span>&nbsp;seconds.
+    </div>
+</body>
+<script type="text/javascript">
+function DelayRedirect() {
+    var seconds = 900;
+    var dvCountDown = document.getElementById("dvCountDown");
+    var lblCount = document.getElementById("lblCount");
+    dvCountDown.style.display = "block";
+    lblCount.innerHTML = seconds;
+    setInterval(function () {
+        seconds--;
+        lblCount.innerHTML = seconds;
+        if (seconds == 0) {
+            dvCountDown.style.display = "none";
+            window.location = "/";
+        }
+    }, 1000);
+}
+</script>

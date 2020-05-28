@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upload File | Infenion AI Challenge</title>
+    <link rel="icon" type="image/ico" href="icons/loupe.svg">
+    <link rel="stylesheet" href="static/upload.css">
+   
+</head>
+<body>
+    <!-- front_body starts -->
+    <div class="front_body">
+        <div class="navbar_holder">
+            <nav class="navbar">
+                <ul class="navbar_list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="search.html">Search</a></li>
+                    <li><a href="#" class="active">Upload</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="file_upload_holder">
+            <div class="file_drop_area">
+                <p>Drag files here or click to upload...</p>
+            </div>
+        </div>
+    </div>
+    <!-- front-body ends -->
+    
+    <br>
+    <div class="output_holder">
+        <div class="output"></div>
+    </div>
+
+    <!-- footer starts -->
+    <div class="footer"></div>
+    <!-- footer ends -->
+</body>
+<script>
+(function (window) {
+    function triggerCallback(e, callback) {
+        if (!callback || typeof callback !== 'function') {
+            return;
+        }
+        var files;
+        if (e.dataTransfer) {
+            files = e.dataTransfer.files;
+        } else if (e.target) {
+            files = e.target.files;
+        }
+        callback.call(null, files);
+    }
+
+function makeDroppable(ele, callback) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('multiple', true);
+        input.style.display = 'none';
+        input.addEventListener('change', function (e) {
+            triggerCallback(e, callback);
+        });
+        ele.appendChild(input);
+
+        ele.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            ele.classList.add('dragover');
+        });
+
+        ele.addEventListener('dragleave', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            ele.classList.remove('dragover');
+        });
+
+        ele.addEventListener('drop', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            ele.classList.remove('dragover');
+            triggerCallback(e, callback);
+        });
+
+        ele.addEventListener('click', function () {
+            input.value = null;
+            input.click();
+        });
+    }
+    window.makeDroppable = makeDroppable;
+})(this);
+(function (window) {
+    makeDroppable(window.document.querySelector('.file_drop_area'), function (files) {
+        console.log(files);
+        var output = document.querySelector('.output');
+        output.innerHTML = '';
+        for (var i = 0; i < files.length; i++) {
+            if (files[i].type.indexOf('image/') === 0) {
+                output.innerHTML += '<img width="200" src="' + URL.createObjectURL(files[i]) + '" />';
+            }
+            output.innerHTML += '<p>' + files[i].name + '</p>';
+        }
+    });
+})(this);
+</script>
+</html>
