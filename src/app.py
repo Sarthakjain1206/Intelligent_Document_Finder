@@ -415,15 +415,34 @@ def filenameonclick():
 @app.route('/acceptTitle', methods=['GET', 'POST'])
 def acceptTitle():
     theMainInput = request.form['mainInputVal']
-    # for i in range(len(titles)):
-    #     if titles[i] == theMainInput:
-    #         doc_corpus = data_for_text[i]
-    #         ids = get_similar_documents(doc_corpus)
-    #         for index in ids:
+    titles_lst = []
+    summary_lst = []
+    tags_lst = []
+    text_lst = []
+    for i in range(len(titles)):
+        if titles[i] == theMainInput:
+            doc_corpus = data_for_text[i]
+            ids = get_similar_documents(doc_corpus)
+            for index in ids[1:]:
+                titles_lst.append(titles[index])
+                summary_lst.append(summary[index])
+                tags_lst.append(auto_tag[index])
 
+                text_to_show = " ".join(sent_tokenize(data[index])[:2])
+                if text_to_show != '':
+                    text_lst.append(text_to_show + '....')
+                else:
+                    text_lst.append(data[index])
+            break
+        else:
+            continue
+    dictionary_data = {
+        'titles':titles_lst,
+        'text':text_lst,
+        'summary':summary_lst,
+        'tags':tags_lst
+    }
 
-
-    print("hihihihihihihihih:::::", theMainInput)
     return jsonify({'returnData': theMainInput})
 
 
