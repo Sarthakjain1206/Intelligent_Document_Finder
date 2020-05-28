@@ -6,9 +6,10 @@ from nltk.stem import WordNetLemmatizer
 
 from gensim.parsing.preprocessing import STOPWORDS
 import re
+from search_preprocess import UpdateIndexer
 
 class MakeDataForSearch:
-    def __init__(self, data, titles,summaries,documents,svos):
+    def __init__(self, data, titles, summaries, documents, svos):
         self.data, self.titles, self.summaries, self.documents, self.svos = self.get_all_texts_summary_titles_documents()
 
     def fetch_all_texts(self):
@@ -132,7 +133,7 @@ def maintaining_all_files():
     pickle.dump(obj.documents, open(r"DataBase/document_file.pkl", "wb"))
     pickle.dump(obj.svos, open(r"DataBase/svos_file.pkl", "wb"))
 
-    print("Files is updated")
+    print("Files are updated")
 
     # appending to the main corpus
     corpus = pickle.load(open(r"DataBase/corpus_file.pkl", "rb"))
@@ -141,6 +142,13 @@ def maintaining_all_files():
     text = temp[0][1]
     title = temp[0][0]
     corpus.append(get_corpus(text)+get_corpus(title))
+
+    print("Updating Indexer------")
+    # Update Indexer--- (currently for single file upload)
+    obj2 = UpdateIndexer(corpus[-1], "relevance")
+    obj2.update_indexer()
+    obj2.calc_idf()
+    obj2.dump_file()
 
     pickle.dump(corpus, open(r"DataBase/corpus_file.pkl", "wb"))
 
@@ -156,16 +164,24 @@ def maintaining_all_files():
 
     final_auto_tags.append(auto_tags)
 
+    # Update Indexer --
+    obj2 = UpdateIndexer(final_auto_tags[-1], "tag")
+    obj2.update_indexer()
+    obj2.calc_idf()
+    obj2.dump_file()
+
     pickle.dump(final_auto_tags, open(r"DataBase/tags_pickle.pkl", "wb"))
 
     # appending to title corpus
     title_corpus = pickle.load(open(r"DataBase/title_corpus.pkl", "rb"))
     title_corpus.append(get_corpus(title))
 
+    # Update Indexer --
+    obj2 = UpdateIndexer(title_corpus[-1], "title")
+    obj2.update_indexer()
+    obj2.calc_idf()
+    obj2.dump_file()
+
     pickle.dump(title_corpus, open(r"DataBase/title_corpus.pkl", "wb"))
 
-
     print("corpus is updated")
-
-
-

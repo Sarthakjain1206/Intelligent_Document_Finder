@@ -8,7 +8,7 @@ from scipy.stats import entropy
 from scipy.spatial.distance import jensenshannon
 
 print("Imported")
-corpus = pickle.load(open(r"DataBase/corpus_file.pkl", "rb"))
+corpus = pickle.load(open(r"Database\corpus_file.pkl", "rb"))
 
 
 def train_lda(corpus):
@@ -70,7 +70,7 @@ def get_similar_documents(doc_corpus):
     dictionary = pickle.load(open(r"LdaModel/dictionary.pkl", "rb"))
     doc_topic_dist = pickle.load(open(r"LdaModel/doc_topic_distribution.pkl", "rb"))
     lda = LdaModel.load(r"LdaModel/model")
-#    titles = pickle.load(open(r"DataBase/title_file.pkl", "rb"))
+    titles = pickle.load(open(r"DataBase/title_file.pkl", "rb"))
 
     bow = dictionary.doc2bow(doc_corpus)
     doc_distribution = np.array([tup[1] for tup in lda.get_document_topics(bow=bow)])

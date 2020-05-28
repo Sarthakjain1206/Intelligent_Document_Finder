@@ -1,10 +1,8 @@
 import sqlite3
-import os
 import pickle
-from auto_tagging_script import SubjectTrigramTagger
 from auto_tagging_script import AutoTags
 
-from final_script_fulldb import load_word_embeddings, cleaning_for_summarization, get_summary
+from final_script_fulldb import get_summary
 from final_script_fulldb import PreProcess, valid_extensions
 from ready_for_search import *
 print('imported')
@@ -108,9 +106,9 @@ def main(file_upload, title):
         print(doc_id)
         # title = input("Enter Title")
         # text = text
-        print(text)
+        #print(text)
         summary = get_summary(text, word_embeddings)
-        print(summary)
+        #print(summary)
 
         # manual_tags = str(list(map(str, input("Enter manual tags").split("  "))))
         manual_tags = ""

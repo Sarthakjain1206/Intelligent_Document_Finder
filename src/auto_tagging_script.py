@@ -10,7 +10,7 @@ from gensim.parsing.preprocessing import STOPWORDS
 from nltk.tokenize import word_tokenize, sent_tokenize
 
 import nltk
-from nltk.stem import WordNetLemmatizer
+# from nltk.stem import WordNetLemmatizer
 
 from nltk import DefaultTagger, UnigramTagger, BigramTagger, TrigramTagger
 import pickle

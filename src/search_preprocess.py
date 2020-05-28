@@ -1,4 +1,6 @@
 import pickle
+from typing import Dict, Any
+
 import numpy as np
 import math
 
@@ -37,14 +39,9 @@ class Indexer:
             self.doc_freqs.append(frequencies)  # doc_freqs list will contain words frequencies of all documents.
 
             for word, freq in frequencies.items():
-                try:
-                    nd[word] += 1
-                except:
+                if word not in nd:
                     nd[word] = 0
-                    nd[word] += 1
-                # if word not in nd:
-                #     nd[word] = 0
-                # nd[word] += 1  # nd will maintain Number of documents with a word
+                nd[word] += 1  # nd will maintain Number of documents with a word
 
         self.average_docs_len = num_docs / self.corpus_size  # calculating average doc length
         return nd
@@ -93,12 +90,78 @@ class Indexer:
         else:
             raise Exception("Invalid Argument 'type' of create_files()")
 
+class UpdateIndexer:
+
+    def __init__(self, new_corpus, search_type, epsilon=0.25):
+        if new_corpus[0] is list:
+            self.new_corpus = new_corpus        # It must be a list of lists --> [ [],[],[] ]
+        else:
+            self.new_corpus = [new_corpus]
+
+        self.search_type = search_type
+        self.prev_search_data = pickle.load(open(f"DataBase/search_file_{self.search_type}.pkl", "rb"))
+        self.epsilon = epsilon
+        self.curr_average_idf = 0
+
+    def update_indexer(self):
+        num_docs = 0
+        for document in self.new_corpus:
+            document_len = len(document)
+            self.prev_search_data['doc_len'].append(document_len)
+            self.prev_search_data['corpus_size'] += 1
+            num_docs += document_len  # num_doc will calculate the value of total words in corpus.
+
+            frequencies = {}  # frequencies of word in current document.
+
+            for word in document:
+                if word not in frequencies:
+                    frequencies[word] = 0
+                frequencies[word] += 1
+            self.prev_search_data['doc_freqs'].append(frequencies)  # doc_freqs list will contain words frequencies of all documents.
+
+            for word, freq in frequencies.items():
+                try:
+                    self.prev_search_data['nd'][word] += 1
+                except KeyError:
+                    self.prev_search_data['nd'][word] = 0
+                    self.prev_search_data['nd'][word] += 1
+                # if word not in nd:
+                #     nd[word] = 0
+                # nd[word] += 1  # nd will maintain Number of documents with a word
+
+        self.prev_search_data['average_docs_len'] = num_docs / self.prev_search_data['corpus_size']  # calculating average doc length
+        # return nd
+
+    def calc_idf(self):
+        # collect idf sum to calculate an average idf for epsilon value
+        idf_sum = 0
+        # collect words with negative idf to set them a special epsilon value.
+        # idf can be negative if word is contained in more than half of documents
+        negative_idfs = []
+        for word, freq in self.prev_search_data['nd'].items():
+            idf = math.log(self.prev_search_data['corpus_size'] - freq + 0.5) - math.log(freq + 0.5)
+            self.prev_search_data['idf'][word] = idf
+            idf_sum += idf
+            if idf < 0:
+                negative_idfs.append(word)
+
+        self.curr_average_idf = idf_sum / len(self.prev_search_data['idf'])
+
+        eps = self.epsilon * self.curr_average_idf
+        for word in negative_idfs:
+            self.prev_search_data['idf'][word] = eps
+    def dump_file(self):
+        pickle.dump(self.prev_search_data, open(f"DataBase/search_file_{self.search_type}.pkl", "wb"))
+        print("Search File is Updated!")
+
 
 class Search:
     def __init__(self, data):
         self.data = data
+        print(data['corpus_size'])
 
     def get_top_n(self, query, documents, n=5):
+        print(len(documents))
         assert self.data['corpus_size'] == len(documents), "The documents given don't match the index corpus!"
 
         scores = self.get_scores(query)
