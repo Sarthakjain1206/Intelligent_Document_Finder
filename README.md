@@ -1,5 +1,10 @@
-# Intelligent-Document-Finder
+# Intelligent-Document-Finder-2.0
 A tool which can find your any document using **semantic search**
+**This is an Improvised Version of Intelligent-Document-Finder**<br>
+List of New Features--
+1. Implemented Document Similarity Script, which allows you to see related or most similar documents.
+2. New UI of website.
+3. Reduces time complexities of search functions.
 
 # What is Intelligent Document Finder ?
 How easy do you find it to remember the exact location of a document that you created last year? Not very easy, right? Big Organizations/people deal with hundreds of documents daily and forget about them, most of the time.
