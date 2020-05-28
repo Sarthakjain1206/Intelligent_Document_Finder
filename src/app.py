@@ -9,7 +9,6 @@ import random
 from search_preprocess import Indexer, Search
 from werkzeug.utils import secure_filename
 import re
-# from Search import search_by_BM25
 
 import pickle
 from nltk.tokenize import word_tokenize, sent_tokenize

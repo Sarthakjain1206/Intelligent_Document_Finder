@@ -37,9 +37,14 @@ class Indexer:
             self.doc_freqs.append(frequencies)  # doc_freqs list will contain words frequencies of all documents.
 
             for word, freq in frequencies.items():
-                if word not in nd:
+                try:
+                    nd[word] += 1
+                except:
                     nd[word] = 0
-                nd[word] += 1  # nd will maintain Number of documents with a word
+                    nd[word] += 1
+                # if word not in nd:
+                #     nd[word] = 0
+                # nd[word] += 1  # nd will maintain Number of documents with a word
 
         self.average_docs_len = num_docs / self.corpus_size  # calculating average doc length
         return nd
