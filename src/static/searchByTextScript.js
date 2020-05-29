@@ -12,7 +12,7 @@ let currentTags;
 let the_one_tag;
 
 $(document).ready(function(){
-  console.log("ready");
+  //console.log("ready");
 
 
 
@@ -29,7 +29,7 @@ $(document).ready(function(){
     //console.log(mainTitle);
     let mainInput = $(this).parent().find("input:eq(0)").val(mainTitle);
     let mainInputVal = mainInput.val();
-    console.log(mainInputVal);
+    //console.log(mainInputVal);
 
     req = $.ajax({
       url : '/acceptTitle',
@@ -40,7 +40,7 @@ $(document).ready(function(){
     
 
     req.done(function(data){
-      console.log("done");
+      //console.log("done");
       //console.log(data.returnData);
       allDictionaryData = data.returnData;
 
@@ -50,10 +50,10 @@ $(document).ready(function(){
       dictionaryTags = allDictionaryData.tags;
 
       for(var i = 0 ; i < 9; i++){
-          console.log("Title: " + allDictionaryData.titles[i]);
-          console.log("Text: " + allDictionaryData.text[i]);
-          console.log("Summary: " + allDictionaryData.summary[i]);
-          console.log("Tags: " + allDictionaryData.tags[i]);
+          //console.log("Title: " + allDictionaryData.titles[i]);
+          //console.log("Text: " + allDictionaryData.text[i]);
+          //console.log("Summary: " + allDictionaryData.summary[i]);
+          //console.log("Tags: " + allDictionaryData.tags[i]);
   
           currentTitle = allDictionaryData.titles[i];
           currentText = allDictionaryData.text[i];
