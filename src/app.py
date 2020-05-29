@@ -137,9 +137,21 @@ def load_all_data():
     print("all data loaded...")
 
 
+
+
+
+
+
+
 @app.route('/')
 def index():
     return render_template('index.html', var_path = var_path)
+
+
+
+
+
+
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -154,6 +166,18 @@ def search():
             return redirect(url_for('viewSearchbyTitle', the_text=entered_text))
 
     return redirect('/')
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @app.route('/searchByTag/<the_text>')  # removed methods post get
@@ -210,6 +234,17 @@ def viewSearchbyTag(the_text):
                            type=mystring, title_len=title_len, old_query=old_query, new_query=new_query,
                            extension_list=extension_list)
 
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/searchByRelevance/<the_text>')
 def viewSearchbyRelevance(the_text):
     mystring = "Relevance"
@@ -264,6 +299,16 @@ def viewSearchbyRelevance(the_text):
                            extension_list=extension_list)
 
 
+
+
+
+
+
+
+
+
+
+
 @app.route('/searchByTitle/<the_text>')
 def viewSearchbyTitle(the_text):
     mystring = "Title"
@@ -314,6 +359,14 @@ def viewSearchbyTitle(the_text):
                            extension_list=extension_list)
 
 
+
+
+
+
+
+
+
+
 @app.route('/', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
@@ -328,6 +381,7 @@ def upload_file():
         print(files[0].filename)
         
         file_upload = files[0].filename
+        
 
         # taking filename as a title
         title = " ".join(file_upload.split('.')[:-1])
@@ -348,15 +402,26 @@ def upload_file():
             # I know this way of doing it, is very wrong, It's more like a cheating. But I have done this for a particular reason
             # I will change it after sometime.
 
+            
             return redirect('/')
 
         except Exception:
+            
             #print("Hello")
             return redirect('/')
 
 
-var_path = ""
 
+
+
+
+
+
+
+
+
+var_path = ""
+  
 
 @app.route('/path', methods=['POST'])
 def choose():
@@ -371,9 +436,29 @@ def choose():
     return redirect('/')
 
 
+
+
+
+
+
+
+
+
+
 @app.route('/nopage')
 def noaccountpagefunction():
     return render_template('nopage.html')
+
+
+
+
+
+
+
+
+
+
+
 
 
 # tempdiv = ""
@@ -418,11 +503,22 @@ def filenameonclick():
             return render_template('checkworking.html', mymessage=mymessage)
 
 
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/acceptTitle', methods=['GET', 'POST'])
 def acceptTitle():
     
     theMainInput = request.form['mainInputVal']
-    print("Hihihihihi" + theMainInput)
+    #print("Hihihihihi" + theMainInput)
     titles_lst = []
     summary_lst = []
     tags_lst = []
@@ -455,17 +551,14 @@ def acceptTitle():
     return jsonify({'returnData': dictionary_data})
 
 
-"""
-@app.route('/theTest', methods = ['GET', 'POST'])
-def theTest():
-    theFinalTitle = request.form['theTitle']
-    print("the value" + theFinalTitle)
 
-    return jsonify({'theFinally' : theFinalTitle})
-    #myList = [random.randint(1,100), random.randint(1,100), random.randint(1,100), random.randint(1,100)]
-    #return jsonify({'theNumber' : myNum})
-    #return jsonify({'theList' : myList})
-"""
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
