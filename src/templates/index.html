@@ -31,6 +31,7 @@
 
 
 
+
     <div class="complete_container" id="complete_container">
 
 
@@ -252,7 +253,12 @@
                 <button type="submit" class="path_submit_button">Upload Path</button>
             </form>
             <div class="specified_path">
-                <p>Specified path: <span>{{ var_path }}</span></p>
+                <p>Specified path: <span>{% if var_path %}
+                    {{ var_path }}
+                    {% else %}
+                    None
+                    {% endif %}
+                </span></p>
             </div>
         </div>
 
@@ -304,11 +310,11 @@
     </div>
 
 
-
+<br><br><br>
 
 <!-- footer starts -->
-<div class="upper_arrow"></div>
-<div class="footer">
+<div class="upper_arrow" id="upper_arrow"></div>
+<div class="footer" class="footer">
         <div class="upper_footer">
             <div class="left_part">
                 <div class="need_help">
@@ -403,16 +409,16 @@
         document.getElementById('total_no_files').innerHTML = "Total number of files: " + fileList.length;
 
         }
-        function qwerty_fun(){
-            
-            var cv = document.getElementById('tag_input_values').value;
-            //console.log(cv);
-        }
+        
         
     }
 
 
-
+    function qwerty_fun(){
+            
+            //var cv = document.getElementById('tag_input_values').value;
+            //console.log(cv);
+        }
 
 
     document.getElementById('file_upload_form_submit_hidden').style.display = 'none';
@@ -434,9 +440,13 @@
 
     function pagedisabler(){
         document.getElementById('complete_container').style.display = "none";
+        document.getElementById('footer').style.display = "none"; 
+        document.getElementById('upper_arrow').style.display = "none";
         document.getElementById('gif_holder_id').style.display = "block";
 
-        
+        var exception_holder_text;
+        exception_holder_text = $('.exception_holder').val();
+        //alert(exception_holder_text);
     }
     
     
