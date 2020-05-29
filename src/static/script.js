@@ -55,11 +55,6 @@ function empty_search(){
 
 
 
-
-
-/* from stack overflow */
-// left: 37, up: 38, right: 39, down: 40,
-// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
 var keys = {37: 1, 38: 1, 39: 1, 40: 1};
 
 function preventDefault(e) {
@@ -104,11 +99,8 @@ function enableScroll() {
 
 
 $(document).ready(function(){
-/*
-  $("#files_tags_upload_entry").keyup(function(){
-    console.log($("#files_tags_upload_entry").val());
-    //$("#the_tag_id").val($("#files_tags_upload_entry").val());
-  }); */
+
+  
     
   var scrollLink = $('.scroll');
 
@@ -125,7 +117,6 @@ $(document).ready(function(){
   $('.complete_body_overlay').css({"height": completeHeight});
 
 
-  
 
 });
 
