@@ -23,7 +23,8 @@ Soon, we will add the support of the dynamic databases, so that you can use this
 # Technologies Used
 **```Python3.6```**
 __```JavaScript```__
-__```HTML/CSS```__
+__```jQuery```__
+__```HTML & CSS```__
 <br>
 <h4>Database Used:</h4>
  SQlite
@@ -31,10 +32,11 @@ __```HTML/CSS```__
 <h4>For implementing searching:</h4>
  Various NLP(Natural Language Processing) techniques is used.
 <br>
-<h4>For website(Local Host):</h4>
+<h4>For website:</h4>
 
 - Python-based Web framework : Flask
-- JavaScript/JQuery
+- JavaScript
+- jQuery
 
 # Program Flow
 <img src="https://github.com/Sarthakjain1206/Intelligent-Document-Finder/blob/master/Flowchart.png" alt="Trulli" width="700" height="500">
