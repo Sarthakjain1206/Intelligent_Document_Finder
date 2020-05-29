@@ -9,6 +9,7 @@ import random
 from search_preprocess import Indexer, Search
 from werkzeug.utils import secure_filename
 import re
+# from Search import search_by_BM25
 
 import pickle
 from nltk.tokenize import word_tokenize, sent_tokenize
@@ -21,10 +22,11 @@ import random
 from docx import Document
 from auto_tagging_script import AutoTags
 
-from final_script_fulldb import get_summary, writeTofile, PreProcess
-from main import main
+from final_script_fulldb import load_word_embeddings, cleaning_for_summarization, get_summary, writeTofile
+from final_script_fulldb import PreProcess, valid_extensions
+from main import *
 from ready_for_search import *
-from document_similarity import get_similar_documents
+from document_similarity import *
 
 
 def get_text_from_docx_document(file):
@@ -95,31 +97,25 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def load_corpus_and_data_files():
-    global data, titles, auto_tag, summary, document_file
+@app.before_first_request
+def load_all_data():
+    global data, titles, auto_tag, summary
 
     data = pickle.load(open(r"DataBase/data_file.pkl", "rb"))
     titles = pickle.load(open(r"DataBase/title_file.pkl", "rb"))
     auto_tag = pickle.load(open(r"DataBase/svos_file.pkl", "rb"))
     summary = pickle.load(open(r"DataBase/summary_file.pkl", "rb"))
-    document_file = pickle.load(open(r"DataBase/document_file.pkl", "rb"))
-
-
-def load_search_data_files():
-    global search_data_for_relevance, search_data_for_tag, search_data_for_title
-    search_data_for_relevance = pickle.load(open(r"DataBase/search_file_relevance.pkl", "rb"))
-    search_data_for_tag = pickle.load(open(r"DataBase/search_file_tag.pkl", "rb"))
-    search_data_for_title = pickle.load(open(r"DataBase/search_file_title.pkl", "rb"))
-
-
-@app.before_first_request
-def load_all_data():
-    load_corpus_and_data_files()
 
     global data_for_text
+
     data_for_tag = pickle.load(open(r"DataBase/tags_pickle.pkl", "rb"))
+
     data_for_text = pickle.load(open(r"DataBase/corpus_file.pkl", "rb"))
+
     data_for_title = pickle.load(open(r"DataBase/title_corpus.pkl", "rb"))
+
+    global document_file
+    document_file = pickle.load(open(r"DataBase/document_file.pkl", "rb"))
 
     if os.path.exists(os.path.join(os.getcwd(), "DataBase/search_file_relevance.pkl")) == False:
         objj = Indexer(data_for_text, search_type="relevance")
@@ -133,15 +129,17 @@ def load_all_data():
         objj = Indexer(data_for_title, search_type="title")
         objj.create_files()
 
-    load_search_data_files()
+    global search_data_for_relevance, search_data_for_tag, search_data_for_title
+    search_data_for_relevance = pickle.load(open(r"DataBase/search_file_relevance.pkl", "rb"))
+    search_data_for_tag = pickle.load(open(r"DataBase/search_file_tag.pkl", "rb"))
+    search_data_for_title = pickle.load(open(r"DataBase/search_file_title.pkl", "rb"))
 
     print("all data loaded...")
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
+    return render_template('index.html', var_path = var_path)
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -190,8 +188,7 @@ def viewSearchbyTag(the_text):
     # Loop over the results list and create the list of parts of texts to pass on HTML page
     text = []
     for i in results:
-        text_to_show = " ".join(
-            sent_tokenize(i)[:2])  # Get the at most 2 sentences from text of document to show them on screen
+        text_to_show = " ".join(sent_tokenize(i)[:2])   # Get the at most 2 sentences from text of document to show them on screen
         if text_to_show != '':
             text.append(text_to_show + '....')
         # If we didn't get any text to show, that can be due to the very small document which doesn't
@@ -212,7 +209,6 @@ def viewSearchbyTag(the_text):
     return render_template('searchbyText.html', text=text, tag=query, title=title, summaries=summaries, tags=tags,
                            type=mystring, title_len=title_len, old_query=old_query, new_query=new_query,
                            extension_list=extension_list)
-
 
 @app.route('/searchByRelevance/<the_text>')
 def viewSearchbyRelevance(the_text):
@@ -245,8 +241,7 @@ def viewSearchbyRelevance(the_text):
 
     # Loop over the results list and create the list of parts of texts to pass on HTML page
     for i in results:
-        text_to_show = " ".join(
-            sent_tokenize(i)[:2])  # Get the at most 2 sentences from text of document to show them on screen
+        text_to_show = " ".join(sent_tokenize(i)[:2])   # Get the at most 2 sentences from text of document to show them on screen
         if text_to_show != '':
             text.append(text_to_show + '....')
         else:
@@ -292,14 +287,13 @@ def viewSearchbyTitle(the_text):
     for i in indexes:
         results_titles.append(titles[i])
         results_summaries.append(summary[i])
-        if auto_tag[i]:
+        if auto_tag[i] != []:
             results_tags.append(list(set(random.choices(auto_tag[i], k=3))))
         else:
             results_tags.append(['No Auto tags'])
     text = []
     for i in results:
-        text_to_show = " ".join(
-            sent_tokenize(i)[:2])  # Get the at most 2 sentences from text of document to show them on screen
+        text_to_show = " ".join(sent_tokenize(i)[:2])   # Get the at most 2 sentences from text of document to show them on screen
         if text_to_show != '':
             text.append(text_to_show + '....')
         else:
@@ -326,7 +320,13 @@ def upload_file():
         if 'files[]' not in request.files:
             return redirect(request.url)
         files = request.files.getlist(r'files[]')
+
+        #the_requested_tag holds tha vale of entered tag  
+
+        the_requested_tag = request.form['just_the_tag']
+        print(the_requested_tag)
         print(files[0].filename)
+        
         file_upload = files[0].filename
 
         # taking filename as a title
@@ -342,19 +342,16 @@ def upload_file():
             file_upload = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             print(file_upload)
             main(file_upload, title)
-            # after completion of processing delete that file from folder.
+            # after completion of processsing delete that file from folder.
             os.remove(file_upload)
-            # I know this way of doing it, is very wrong, It's more like a cheating. But I have done this for a
-            # particular reason I will change it after sometime.
 
-            # Load all files again --- so that user can see changes in searching after uploading.
-            load_corpus_and_data_files()
-            load_search_data_files()
+            # I know this way of doing it, is very wrong, It's more like a cheating. But I have done this for a particular reason
+            # I will change it after sometime.
 
             return redirect('/')
 
         except Exception:
-            print("Exception raised---")
+            #print("Hello")
             return redirect('/')
 
 
@@ -423,8 +420,9 @@ def filenameonclick():
 
 @app.route('/acceptTitle', methods=['GET', 'POST'])
 def acceptTitle():
+    
     theMainInput = request.form['mainInputVal']
-    theMainInput = request.form['mainInputVal']
+    print("Hihihihihi" + theMainInput)
     titles_lst = []
     summary_lst = []
     tags_lst = []
@@ -447,13 +445,14 @@ def acceptTitle():
         else:
             continue
     dictionary_data = {
-        'titles': titles_lst,
-        'text': text_lst,
-        'summary': summary_lst,
-        'tags': tags_lst
+        'titles':titles_lst,
+        'text':text_lst,
+        'summary':summary_lst,
+        'tags':tags_lst
     }
     print(dictionary_data)
-    return jsonify({'returnData': theMainInput})
+
+    return jsonify({'returnData': dictionary_data})
 
 
 """
