@@ -42,7 +42,8 @@
                         <div class="file_extension_ico">
                             <div class="img_holder">
 <!--                                <img src="{{ url_for('static' , filename='icons/docx.svg') }}" alt="" srcset="">-->
-                                <img src="{{ baseUrl }}/{{extension_list[i] ~ '.svg'}}" alt="" srcset="">
+                                <img src="{{ baseUrl }}/{{extension_list[i] ~ '.svg'}}">
+                                
 
                             </div>
                         </div>
@@ -66,7 +67,7 @@
                                     <div class="final_tags">
                                         {% for j in range(0, length-1)  %}
                                             <div class="the_tag">
-                                                <li>{{ tags[i][j] ~ ", " }}</li>
+                                                <li>{{ tags[i][j] ~ " " }}</li>
                                             </div>
                                         {% endfor %}
                                     </div>
@@ -98,38 +99,18 @@
     </div>
 
 
-    <br><br><br>
+    <br><br><br><br><br><br>
 
 
 
-
-
-        <!-- footer starts -->
- <!--     <div class="footer">
-        <div class="footer_1">   </div>
-        <br>
-        <div class="footer_social_media"> 
-            <ul>
-                <li><a href="#"><img src="{{url_for('static' , filename='icons/facebook (copy)2.svg')}}" alt="" srcset=""></a></li>
-                <li><a href="#"><img src="{{url_for('static' , filename='icons/twitter (copy)2.svg')}}" alt="" srcset=""></a></li>
-                <li><a href="#"><img src="{{url_for('static' , filename='icons/linkedin (copy)2.svg')}}" alt="" srcset=""></a></li>
-                <li><a href="#"><img src="{{url_for('static' , filename='icons/github-image (copy)2.svg')}}" alt="" srcset=""></a></li>
-                
-            </ul>
-        </div>
-    </div>
-
--->
-
-
-<!-- footer ends -->
+<!-- show similar starts -->
 
 <div class="show_similar_overlay" id="show_similar_overlay">
 
 
     <div class="close_overlay">
         <div class="title_holder">
-            Showing results similar to: <span id="show_similar_span" class="show_similar_span">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+            Showing results similar to: <span id="show_similar_span" class="show_similar_span"></span>
         </div>
         <div class="button_holder">
             <button onclick="close_overlay()" class="close_overlay_button"><img class="close_overlay_icon" src="{{ url_for('static', filename='cross.svg') }}"></button>
@@ -139,64 +120,53 @@
     </div>
 
 
-    <div class="output_outer_container">
+    <div class="output_outer_container" id="show_similar_outer_container">
             
-        {% for i in range(0, title_len)  %}
-            {% set length = tags[i]|length %}
-
-            <div class="output_holder">
-                <div class="output">
-                    <div class="file_extension_ico">
-                        <div class="img_holder">
-<!--                                <img src="{{ url_for('static' , filename='icons/docx.svg') }}" alt="" srcset="">-->
-                            <img src="{{ baseUrl }}/{{extension_list[i] ~ '.svg'}}" alt="" srcset="">
-
-                        </div>
-                    </div>
-
-                    <div class="text">
-                        <div class="heading" id="heading">
-
-                            <form action="/filenameonclick" , method="POST">
-                                <input type="text" onchange="seeif()"  name="file_head" class="thehiddenforminput"  id="thehiddenform">
-                                <button type="submit" id="myclassnameid" name="myclassname" class="myclassname" value="{{ title[i] }}"><b>Title: </b><span>{{ title[i] }}</span></button>
-                            </form>
-                        </div>
-
-                        <div class="original_text">
-                          <b style="font-size: 2.2vh">Text: </b>  {{ text[i] }}
-                        </div>
-                        <div class="tags">
-
-                            <div class="tag_container">
-                                <div style="padding: 1vh 1vh;"><b>Tags: </b></div>
-                                <div class="final_tags">
-                                    {% for j in range(0, length-1)  %}
-                                        <div class="the_tag">
-                                            <li>{{ tags[i][j] ~ ", " }}</li>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="summary">
-                        <p style="text-align:center; font-weight: 500; font-size: 2.3vh">Summary</p>
-                        {{ summaries[i] }}
-                        
-                    </div>
-
-                </div>
-
-                
-               
-
-
-            </div>
-        {% endfor %}
     </div>
 </div>
+
+<!-- show similar ends -->
+
+
+
+<!-- footer starts -->
+<div class="upper_arrow"></div>
+<div class="footer">
+    <div class="upper_footer">
+        <div class="left_part">
+            <div class="need_help">
+                Have any suggestions, we would love to hear them
+            </div>
+            
+            <div class="share_email"><input type="text" placeholder="Enter your email" type="email"> <button type="submit">Notify</button></div>
+        </div>
+
+        <div class="right_part_outer">
+            <div class="right_part">
+                <ul>
+                    <li>Share</li>
+                    <li><a href="#"><img src="{{ url_for('static', filename = 'icons/facebook3.svg') }}"></a></li>
+                    <li><a href="#"><img src="{{ url_for('static', filename = 'icons/twitter2.svg') }}"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="middle_footer">
+        Made with <span>&#9829;</span> by Sarthak & Rishabh
+    </div>
+        <div class="lower_footer">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+</div>
+
+<!-- footer ends -->
+
+
 
 
 </body>
