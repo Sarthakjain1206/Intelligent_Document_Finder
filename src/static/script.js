@@ -131,7 +131,7 @@ $(document).ready(function(){
 
 function thefunc(){ 
   let entered_vale_of_tag = document.getElementById("files_tags_upload_entry").value;
-  console.log(entered_vale_of_tag);
+  //console.log(entered_vale_of_tag);
   document.getElementById('the_tag_id').value = entered_vale_of_tag
 }
 
