@@ -1,17 +1,3 @@
-$(document).ready(function(){
-    
-    var scrollLink = $('.scroll');
-
-    scrollLink.click(function(e){
-        e.preventDefault();
-        //console.log("success");
-        $('body,html').animate({
-            scrollTop: $(this.hash).offset().top
-        }, 1000)
-    });
-
-
-});
 
 
 function show_filter_menu(){
@@ -115,5 +101,38 @@ function enableScroll() {
 }
 
 
+
+
+$(document).ready(function(){
+/*
+  $("#files_tags_upload_entry").keyup(function(){
+    console.log($("#files_tags_upload_entry").val());
+    //$("#the_tag_id").val($("#files_tags_upload_entry").val());
+  }); */
+    
+  var scrollLink = $('.scroll');
+
+  scrollLink.click(function(e){
+      e.preventDefault();
+      //console.log("success");
+      $('body,html').animate({
+          scrollTop: $(this.hash).offset().top
+      }, 1000)
+  });
+
+  let completeHeight = $('body').height();
+  //console.group(completeHeight);
+  $('.complete_body_overlay').css({"height": completeHeight});
+
+
+  
+
+});
+
+function thefunc(){ 
+  let entered_vale_of_tag = document.getElementById("files_tags_upload_entry").value;
+  console.log(entered_vale_of_tag);
+  document.getElementById('the_tag_id').value = entered_vale_of_tag
+}
 
 
