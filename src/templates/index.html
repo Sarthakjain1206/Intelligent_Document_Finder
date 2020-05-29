@@ -375,11 +375,11 @@
         myarray.push(my_temp);
         for(var i = 0; i < myarray.length ; i++){
             //s += myarray[i] + " ";
-            console.log(myarray);
+            //console.log(myarray);
         }
         
         // just temp array
-        console.log(temp_array[0]);
+        //console.log(temp_array[0]);
 
        
     }
@@ -393,10 +393,10 @@
 
             document.getElementById('file_list_container').innerHTML = "";
             for(var i = 0 ; i < fileList.length; i++){
-                console.log(fileList[i]);
+                //console.log(fileList[i]);
                 document.getElementById('file_list_container').innerHTML += '<p id="file_list_i">' + fileList[i].name + '</p>' + '\n'  + '<input type="text" placeholder="Enter tags for file..." id="files_tags_upload_entry" class="files_tags_upload_entry" name="files_tags_upload_entry" onkeyup="thefunc()">' +'<label  for="final_file_upload_button" class="final_file_upload_button" onclick="pagedisabler()">Upload</label>' ;
                 file_name = fileList[i].name;
-                console.log(file_name);
+                //console.log(file_name);
                 temp_array.push(file_name); //temp_array holds name of file
 
         }
@@ -406,7 +406,7 @@
         function qwerty_fun(){
             
             var cv = document.getElementById('tag_input_values').value;
-            console.log(cv);
+            //console.log(cv);
         }
         
     }
