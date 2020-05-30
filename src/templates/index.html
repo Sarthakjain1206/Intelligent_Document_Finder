@@ -29,7 +29,7 @@
 
     </div>
 
-
+    <input style="display: none;" class="exception_text_holder" id="exception_text_holder" value="{{ page_exception_text }}">
 
 
     <div class="complete_container" id="complete_container">
@@ -314,7 +314,7 @@
 
 <!-- footer starts -->
 <div class="upper_arrow" id="upper_arrow"></div>
-<div class="footer" class="footer">
+<div class="footer" id="footer">
         <div class="upper_footer">
             <div class="left_part">
                 <div class="need_help">
@@ -440,9 +440,10 @@
 
     function pagedisabler(){
         document.getElementById('complete_container').style.display = "none";
+        document.getElementById('gif_holder_id').style.display = "block";
+        document.body.style.backgroundColor = "#fff";
         document.getElementById('footer').style.display = "none"; 
         document.getElementById('upper_arrow').style.display = "none";
-        document.getElementById('gif_holder_id').style.display = "block";
 
         var exception_holder_text;
         exception_holder_text = $('.exception_holder').val();
