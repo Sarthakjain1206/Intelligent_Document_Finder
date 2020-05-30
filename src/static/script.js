@@ -117,6 +117,19 @@ $(document).ready(function(){
   $('.complete_body_overlay').css({"height": completeHeight});
 
 
+  let the_exception_value
+  the_exception_value = $('.exception_text_holder').val();
+  if(the_exception_value == 1){
+    alert("Document uploaded successfully!");
+    $('.exception_text_holder').val("0");
+  }
+  else if(the_exception_value == -1){
+    alert("Unable to upload document!");
+    $('.exception_text_holder').val("0");
+  }
+  else{
+    //nothing
+  }
 
 });
 
