@@ -138,9 +138,17 @@ def load_all_data():
     print("all data loaded...")
 
 
+the_exception_text = 0
+
 @app.route('/')
 def index():
-    return render_template('index.html', var_path = var_path)
+    if(the_exception_text == -1):
+        page_exception_text = -1
+    elif(the_exception_text == 1):
+        page_exception_text = 1
+    else:
+        page_exception_text = 0
+    return render_template('index.html', var_path = var_path, page_exception_text = page_exception_text)
 
 
 @app.route('/search', methods=['POST', 'GET'])
@@ -319,6 +327,7 @@ def viewSearchbyTitle(the_text):
 
 @app.route('/', methods=['POST'])
 def upload_file():
+    global the_exception_text
     if request.method == 'POST':
         if 'files[]' not in request.files:
             return redirect(request.url)
@@ -356,9 +365,11 @@ def upload_file():
             load_corpus_and_data_files()
             load_search_data_files()
 
+            the_exception_text = 1
             return redirect('/')
 
         except Exception:
+            the_exception_text = -1
             print("Exception raised ---")
             return redirect('/')
 
