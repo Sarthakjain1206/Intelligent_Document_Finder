@@ -3,11 +3,14 @@ let dictionaryTitles;
 let dictionaryText;
 let dictionarySummary;
 let dictionaryTags;
+let dictionaryExtensions;
 
 let currentTitle;
 let currentText;
 let currentSummary;
 let currentTags;
+let currentExtension;
+let icon_location;
 
 let the_one_tag;
 
@@ -48,6 +51,8 @@ $(document).ready(function(){
       dictionaryText = allDictionaryData.text;
       dictionarySummary = allDictionaryData.summary;
       dictionaryTags = allDictionaryData.tags;
+      dictionaryExtensions = allDictionaryData.extension;
+
 
       for(var i = 0 ; i < 9; i++){
           //console.log("Title: " + allDictionaryData.titles[i]);
@@ -59,6 +64,9 @@ $(document).ready(function(){
           currentText = allDictionaryData.text[i];
           currentSummary = allDictionaryData.summary[i];
           currentTags = allDictionaryData.tags[i];
+          currentExtension = allDictionaryData.extension[i];
+          icon_location = "static/icons/"+currentExtension + ".svg";
+          
 
           the_one_tag = currentTags[Math.floor(Math.random() * currentTags.length)];
 
@@ -68,7 +76,7 @@ $(document).ready(function(){
           <div class="output">
               <div class="file_extension_ico">
                   <div class="img_holder">
-                  <img src="{{ baseUrl }}/{{extension_list[i] ~ '.svg'}}">
+                  <img src="${icon_location}">
                   </div>
               </div>
   
