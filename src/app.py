@@ -440,11 +440,12 @@ def filenameonclick():
 def acceptTitle():
     
     theMainInput = request.form['mainInputVal']
-    #print("Hihihihihi" + theMainInput)
+    
     titles_lst = []
     summary_lst = []
     tags_lst = []
     text_lst = []
+    extension_list = []
     for i in range(len(titles)):
         if titles[i] == theMainInput:
             doc_corpus = data_for_text[i]
@@ -459,14 +460,17 @@ def acceptTitle():
                     text_lst.append(text_to_show + '....')
                 else:
                     text_lst.append(data[index])
+                
+                extension_list.append(document_file[index]["extension"])
             break
         else:
             continue
     dictionary_data = {
-        'titles':titles_lst,
-        'text':text_lst,
-        'summary':summary_lst,
-        'tags':tags_lst
+        'titles': titles_lst,
+        'text': text_lst,
+        'summary': summary_lst,
+        'tags': tags_lst,
+        'extension': extension_list
     }
     print(dictionary_data)
 
