@@ -1,4 +1,10 @@
-# Intelligent-Document-Finder-2.0
+<p align="center">
+  <img src="https://repository-images.githubusercontent.com/267515540/1d2d9000-a35e-11ea-8ee0-60ba580c3445" width=600 height=300>
+</p>
+
+<h1 align="center">Intelligent Document Finder 2.0</h1>
+
+<br><br>
 A tool which can find your any document using **semantic search**.
 <br><br>
 **This is an Improvised Version of Intelligent-Document-Finder**
