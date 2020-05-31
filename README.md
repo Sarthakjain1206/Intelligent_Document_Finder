@@ -5,7 +5,7 @@ A tool which can find your any document using **semantic search**.
 <br>
 List of New Features--
 1. Implemented Document Similarity Script, which allows you to see related or most similar documents.
-2. New UI of website.
+2. Revamped website UI.
 3. Reduces time complexities of search functions.
 
 # What is Intelligent Document Finder ?
