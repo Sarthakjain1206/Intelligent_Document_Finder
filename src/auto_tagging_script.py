@@ -188,7 +188,7 @@ class AutoTags:
             # cleaning the auto tags futher for better search
             # auto_tags = clean_auto_tags(auto_tags)
             auto_tags = [word for word in auto_tags if word not in STOPWORDS and len(word) > 2]
-            return str(auto_tags), ""
+            return auto_tags, []
 
         entities = list(set(entities))
 
@@ -209,7 +209,7 @@ class AutoTags:
             # auto_tags += temp_tags
             # auto_tags = [word for word in auto_tags if word not in STOPWORDS and len(word) > 2]
             # return str(auto_tags), ""
-            return str(auto_tags), ""
+            return auto_tags, []
 
         tagged_sents = self.tag_sentences(subject, document)
 
@@ -222,10 +222,6 @@ class AutoTags:
                 svos_list.append(svo_word)
 
                 auto_tags.append(svo_word)
-                for num in svo["phrase"]:
-                    temp_word = num[0].lower()
-                    if temp_word not in entities and temp_word not in STOPWORDS:
-                        auto_tags.append(temp_word)
 
         auto_tags = [word for word in auto_tags if word not in STOPWORDS and len(word) > 2]
-        return str(auto_tags), str(svos_list)
+        return auto_tags, svos_list

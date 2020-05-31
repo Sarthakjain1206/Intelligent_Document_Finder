@@ -333,7 +333,7 @@ def upload_file():
             return redirect(request.url)
         files = request.files.getlist(r'files[]')
 
-        #the_requested_tag holds tha vale of entered tag  
+        #the_requested_tag holds tha value of entered tag  
 
         the_requested_tag = request.form['just_the_tag']
         print(the_requested_tag)
@@ -341,6 +341,7 @@ def upload_file():
         
         file_upload = files[0].filename
         
+        manual_tags = the_requested_tag.lower().strip().split(',')
 
         # taking filename as a title
         title = " ".join(file_upload.split('.')[:-1])
@@ -350,11 +351,12 @@ def upload_file():
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    break
 
             # go to that file and read it
             file_upload = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             print(file_upload)
-            main(file_upload, title)
+            main(file_upload, title, manual_tags)
             # after completion of processsing delete that file from folder.
             os.remove(file_upload)
 
