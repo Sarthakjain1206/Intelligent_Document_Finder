@@ -120,12 +120,17 @@ $(document).ready(function(){
   let the_exception_value
   the_exception_value = $('.exception_text_holder').val();
   if(the_exception_value == 1){
-    alert("Document uploaded successfully!");
+    //alert("Document uploaded successfully!");
+    $('.file_status').text("File uploaded successfully!");
+    document.getElementById('file_status_outer').style.display = "block";
     $('.exception_text_holder').val("0");
   }
   else if(the_exception_value == -1){
-    alert("Unable to upload document!");
+    //alert("Unable to upload document!");
+    $('.file_status').text("Unable to upload file :(");
+    document.getElementById('file_status_outer').style.display = "block";
     $('.exception_text_holder').val("0");
+   
   }
   else{
     //nothing
@@ -139,4 +144,8 @@ function thefunc(){
   document.getElementById('the_tag_id').value = entered_vale_of_tag
 }
 
+
+function close_file_status(){
+  document.getElementById('file_upload_status').style.display = "none";
+}
 
