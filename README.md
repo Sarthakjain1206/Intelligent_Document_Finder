@@ -100,14 +100,14 @@ You can get in touch with us on linkedln profiles
 
 <br>
 
-__Sarthak Jain__
+__Sarthak Jain__ ```Machine Learning``` ```NLP``` ```Web Crawling```
 
 [![Foo](https://img.icons8.com/cute-clipart/48/000000/linkedin.png)](https://www.linkedin.com/in/sarthak-jain-58b466170/)
 
 You can also follow me on Github to stay updated about my latest projects
 [![Foo](https://img.icons8.com/material-sharp/24/000000/github.png)](https://github.com/Sarthakjain1206)
 
-__Rishabh Mishra__
+__Rishabh Mishra__  ```Full Stack Web Developer```
 
 [![Foo](https://img.icons8.com/cute-clipart/48/000000/linkedin.png)](https://www.linkedin.com/in/rishabh-mishra-3a6985167)
 
