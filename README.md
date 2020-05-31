@@ -38,14 +38,14 @@ __```HTML & CSS```__
 - JavaScript
 - jQuery
 
-# Program Flow
+# Program Flow <img src="https://img.icons8.com/fluent/40/000000/iphone-spinner.png"/>
 <img src="https://github.com/Sarthakjain1206/Intelligent-Document-Finder/blob/master/Flowchart.png" alt="Trulli" width="700" height="500">
 
 # Compatibility
 - Backend (AI part) is compatible on any machine that has python and required dependencies installed.
 - Recommended browsers: Mozilla Firefox and Google Chrome.
 
-# How to Install and Use?
+# How to Install and Use <img src="https://img.icons8.com/color/40/000000/settings.png"/> ?
 
 ```> mkdir IntelligentDocumentFinder```
 <br>
