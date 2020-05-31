@@ -572,6 +572,41 @@ body{
     color: #000000;
     transition: 0.2s;
 }
+
+
+
+.file_upload_status{
+    height: 7vh;
+    background-color: rgba(84, 216, 84, 0.205);
+    border: 0.5px solid rgb(85, 211, 85);
+    border-radius: 0.4rem;
+    color: #333333;
+    font-weight: 300;
+    font-size: 2.1vh;
+    width: 25vw;
+    margin: 2vh auto 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+    
+}
+.file_status{
+    padding: 0 2vw;
+}
+.close_file_status{
+    background-color: ;
+    padding: 2vh;
+    margin: 0 0 0 2vw;
+    color: #000000;
+    cursor: pointer;
+}
+.file_status_outer{
+    display: none;
+}
+
+
 /* output body ends */
 
 /* upload_body starts */
