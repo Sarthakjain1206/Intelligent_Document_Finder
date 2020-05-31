@@ -41,8 +41,8 @@
                     <div class="output">
                         <div class="file_extension_ico">
                             <div class="img_holder">
-<!--                                <img src="{{ url_for('static' , filename='icons/docx.svg') }}" alt="" srcset="">-->
-                                <img src="{{ baseUrl }}/{{extension_list[i] ~ '.svg'}}">
+                                    <!--<img src="{{ url_for('static' , filename='icons/docx.svg') }}" alt="" srcset="">-->
+                                    <img src="{{ baseUrl }}\{{extension_list[i] ~ '.svg'}}" alt="" srcset="">
                                 
 
                             </div>
@@ -145,8 +145,8 @@
             <div class="right_part">
                 <ul>
                     <li>Share</li>
-                    <li><a href="#"><img src="{{ url_for('static', filename = 'icons/facebook3.svg') }}"></a></li>
-                    <li><a href="#"><img src="{{ url_for('static', filename = 'icons/twitter2.svg') }}"></a></li>
+                    <li><a href="https://www.facebook.com/"><img src="{{ url_for('static', filename = 'icons/facebook3.svg') }}"></a></li>
+                    <li><a href="https://twitter.com/"><img src="{{ url_for('static', filename = 'icons/twitter2.svg') }}"></a></li>
                 </ul>
             </div>
         </div>

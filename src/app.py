@@ -166,7 +166,7 @@ def search():
     return redirect('/')
 
 
-@app.route('/searchByTag/<the_text>')  # removed methods post get
+@app.route('/<the_text>')  # removed methods post get
 def viewSearchbyTag(the_text):
     mystring = "Tag"
     query = the_text
@@ -221,7 +221,7 @@ def viewSearchbyTag(the_text):
                            extension_list=extension_list)
 
 
-@app.route('/searchByRelevance/<the_text>')
+@app.route('/<the_text>')
 def viewSearchbyRelevance(the_text):
     mystring = "Relevance"
     query = the_text
@@ -275,7 +275,7 @@ def viewSearchbyRelevance(the_text):
                            extension_list=extension_list)
 
 
-@app.route('/searchByTitle/<the_text>')
+@app.route('/<the_text>')
 def viewSearchbyTitle(the_text):
     mystring = "Title"
     query = the_text
