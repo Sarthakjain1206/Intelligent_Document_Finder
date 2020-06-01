@@ -157,172 +157,168 @@ def search():
         entered_text = request.form['search_bar']
         applied_filter_type = request.form['filter_type_name_holder']
         if applied_filter_type == "Search by Relevance":
-            return redirect(url_for('viewSearchbyRelevance', the_text=entered_text))
+            #return redirect(url_for('viewSearchbyRelevance', the_text=entered_text))
+            the_text = entered_text
+            mystring = "Relevance"
+            query = the_text
+
+            # Cleaning of query---
+            tokenized_query, old_query, new_query = clean_query(query.lower())
+
+            # Creating object for Search class with Data of "search_file_relevance.pkl"
+            obj = Search(search_data_for_relevance)
+            # Get the results
+            indexes, results = obj.get_top_n(tokenized_query, data, n=10)
+
+            results_titles = []
+            results_summaries = []
+            results_tags = []
+
+            # Loop over all indexes of resultants documents, and create the list of resultant titles,
+            # summaries and tags to pass them on HTML page.
+
+            for i in indexes:
+                results_titles.append(titles[i])
+                results_summaries.append(summary[i])
+                if auto_tag[i] != []:
+                    results_tags.append(list(set(random.choices(auto_tag[i], k=3))))
+                else:
+                    results_tags.append(['No Auto tags'])
+            text = []
+
+            # Loop over the results list and create the list of parts of texts to pass on HTML page
+            for i in results:
+                text_to_show = " ".join(sent_tokenize(i)[:2])   # Get the at most 2 sentences from text of document to show them on screen
+                if text_to_show != '':
+                    text.append(text_to_show + '....')
+                else:
+                    # If we didn't get any text to show, that can be due to the very small document which doesn't
+                    # contain any full stop. In that case, append whole text that document has.
+                    text.append(i)
+
+            title = results_titles
+            summaries = results_summaries
+            tags = results_tags
+
+            title_len = len(title)
+
+            extension_list = []
+            for i in indexes:
+                extension_list.append(document_file[i]["extension"])
+
+            return render_template('searchbyText.html', text=text, tag=query, title=title, summaries=summaries, tags=tags,
+                                type=mystring, title_len=title_len, old_query=old_query, new_query=new_query,
+                                extension_list=extension_list, the_text = the_text)
+
         elif applied_filter_type == "Search by Tag":
-            return redirect(url_for('viewSearchbyTag', the_text=entered_text))
+            #return redirect(url_for('viewSearchbyTag', the_text=entered_text))
+            the_text = entered_text
+            mystring = "Tag"
+            query = the_text
+
+            # Cleaning of query---
+            tokenized_query, old_query, new_query = clean_query(query.lower())
+
+            # Creating object for Search class with Data of "search_file_tag.pkl"
+            obj = Search(search_data_for_tag)
+
+            # Get the results
+            indexes, results = obj.get_top_n(tokenized_query, data, n=10)
+
+            results_titles = []
+            results_summaries = []
+            results_tags = []
+
+            # Loop over all indexes of resultants documents, and create the list of resultant titles,
+            # summaries and tags to pass them on HTML page.
+
+            for i in indexes:
+                results_titles.append(titles[i])
+                results_summaries.append(summary[i])
+                if auto_tag[i] != []:
+                    results_tags.append(list(set(random.choices(auto_tag[i], k=3))))
+                else:
+                    results_tags.append(['No Auto tags'])
+
+            # Loop over the results list and create the list of parts of texts to pass on HTML page
+            text = []
+            for i in results:
+                text_to_show = " ".join(sent_tokenize(i)[:2])   # Get the at most 2 sentences from text of document to show them on screen
+                if text_to_show != '':
+                    text.append(text_to_show + '....')
+                # If we didn't get any text to show, that can be due to the very small document which doesn't
+                # contain any full stop. In that case, append whole text that document has.
+                else:
+                    text.append(i)
+
+            title = results_titles
+            summaries = results_summaries
+            tags = results_tags
+
+            title_len = len(title)
+
+            extension_list = []
+            for i in indexes:
+                extension_list.append(document_file[i]["extension"])
+
+            return render_template('searchbyText.html', text=text, tag=query, title=title, summaries=summaries, tags=tags,
+                                    type=mystring, title_len=title_len, old_query=old_query, new_query=new_query,
+                                    extension_list=extension_list, the_text = the_text)
+
         elif applied_filter_type == "Search by Title":
-            return redirect(url_for('viewSearchbyTitle', the_text=entered_text))
+            #return redirect(url_for('viewSearchbyTitle', the_text=entered_text))
+            the_text = entered_text
+            mystring = "Title"
+            query = the_text
+
+            # Cleaning of query---
+            tokenized_query, old_query, new_query = clean_query(query.lower())
+
+            # Creating object for Search class with Data of "search_file_title.pkl"
+            obj = Search(search_data_for_title)
+            # Get the results
+            indexes, results = obj.get_top_n(tokenized_query, data, n=10)
+
+            results_titles = []
+            results_summaries = []
+            results_tags = []
+
+            # Loop over all indexes of resultants documents, and create the list of resultant titles,
+            # summaries and tags to pass them on HTML page.
+
+            for i in indexes:
+                results_titles.append(titles[i])
+                results_summaries.append(summary[i])
+                if auto_tag[i] != []:
+                    results_tags.append(list(set(random.choices(auto_tag[i], k=3))))
+                else:
+                    results_tags.append(['No Auto tags'])
+            text = []
+            for i in results:
+                text_to_show = " ".join(sent_tokenize(i)[:2])   # Get the at most 2 sentences from text of document to show them on screen
+                if text_to_show != '':
+                    text.append(text_to_show + '....')
+                else:
+                    # If we didn't get any text to show, that can be due to the very small document which doesn't
+                    # contain any full stop. In that case, append whole text that document has.
+                    text.append(i)
+            title = results_titles
+            summaries = results_summaries
+            tags = results_tags
+
+            title_len = len(title)
+
+            extension_list = []
+            for i in indexes:
+                extension_list.append(document_file[i]["extension"])
+            return render_template('searchbyText.html', text=text, tag=query, title=title, summaries=summaries, tags=tags,
+                                type=mystring, title_len=title_len, old_query=old_query, new_query=new_query,
+                                extension_list=extension_list, the_text = the_text)
+
 
     return redirect('/')
 
 
-@app.route('/<the_text>')  # removed methods post get
-def viewSearchbyTag(the_text):
-    mystring = "Tag"
-    query = the_text
-
-    # Cleaning of query---
-    tokenized_query, old_query, new_query = clean_query(query.lower())
-
-    # Creating object for Search class with Data of "search_file_tag.pkl"
-    obj = Search(search_data_for_tag)
-
-    # Get the results
-    indexes, results = obj.get_top_n(tokenized_query, data, n=10)
-
-    results_titles = []
-    results_summaries = []
-    results_tags = []
-
-    # Loop over all indexes of resultants documents, and create the list of resultant titles,
-    # summaries and tags to pass them on HTML page.
-
-    for i in indexes:
-        results_titles.append(titles[i])
-        results_summaries.append(summary[i])
-        if auto_tag[i] != []:
-            results_tags.append(list(set(random.choices(auto_tag[i], k=3))))
-        else:
-            results_tags.append(['No Auto tags'])
-
-    # Loop over the results list and create the list of parts of texts to pass on HTML page
-    text = []
-    for i in results:
-        text_to_show = " ".join(sent_tokenize(i)[:2])   # Get the at most 2 sentences from text of document to show them on screen
-        if text_to_show != '':
-            text.append(text_to_show + '....')
-        # If we didn't get any text to show, that can be due to the very small document which doesn't
-        # contain any full stop. In that case, append whole text that document has.
-        else:
-            text.append(i)
-
-    title = results_titles
-    summaries = results_summaries
-    tags = results_tags
-
-    title_len = len(title)
-
-    extension_list = []
-    for i in indexes:
-        extension_list.append(document_file[i]["extension"])
-
-    return render_template('searchbyText.html', text=text, tag=query, title=title, summaries=summaries, tags=tags,
-                           type=mystring, title_len=title_len, old_query=old_query, new_query=new_query,
-                           extension_list=extension_list)
-
-
-@app.route('/<the_text>')
-def viewSearchbyRelevance(the_text):
-    mystring = "Relevance"
-    query = the_text
-
-    # Cleaning of query---
-    tokenized_query, old_query, new_query = clean_query(query.lower())
-
-    # Creating object for Search class with Data of "search_file_relevance.pkl"
-    obj = Search(search_data_for_relevance)
-    # Get the results
-    indexes, results = obj.get_top_n(tokenized_query, data, n=10)
-
-    results_titles = []
-    results_summaries = []
-    results_tags = []
-
-    # Loop over all indexes of resultants documents, and create the list of resultant titles,
-    # summaries and tags to pass them on HTML page.
-
-    for i in indexes:
-        results_titles.append(titles[i])
-        results_summaries.append(summary[i])
-        if auto_tag[i] != []:
-            results_tags.append(list(set(random.choices(auto_tag[i], k=3))))
-        else:
-            results_tags.append(['No Auto tags'])
-    text = []
-
-    # Loop over the results list and create the list of parts of texts to pass on HTML page
-    for i in results:
-        text_to_show = " ".join(sent_tokenize(i)[:2])   # Get the at most 2 sentences from text of document to show them on screen
-        if text_to_show != '':
-            text.append(text_to_show + '....')
-        else:
-            # If we didn't get any text to show, that can be due to the very small document which doesn't
-            # contain any full stop. In that case, append whole text that document has.
-            text.append(i)
-
-    title = results_titles
-    summaries = results_summaries
-    tags = results_tags
-
-    title_len = len(title)
-
-    extension_list = []
-    for i in indexes:
-        extension_list.append(document_file[i]["extension"])
-
-    return render_template('searchbyText.html', text=text, tag=query, title=title, summaries=summaries, tags=tags,
-                           type=mystring, title_len=title_len, old_query=old_query, new_query=new_query,
-                           extension_list=extension_list)
-
-
-@app.route('/<the_text>')
-def viewSearchbyTitle(the_text):
-    mystring = "Title"
-    query = the_text
-
-    # Cleaning of query---
-    tokenized_query, old_query, new_query = clean_query(query.lower())
-
-    # Creating object for Search class with Data of "search_file_title.pkl"
-    obj = Search(search_data_for_title)
-    # Get the results
-    indexes, results = obj.get_top_n(tokenized_query, data, n=10)
-
-    results_titles = []
-    results_summaries = []
-    results_tags = []
-
-    # Loop over all indexes of resultants documents, and create the list of resultant titles,
-    # summaries and tags to pass them on HTML page.
-
-    for i in indexes:
-        results_titles.append(titles[i])
-        results_summaries.append(summary[i])
-        if auto_tag[i] != []:
-            results_tags.append(list(set(random.choices(auto_tag[i], k=3))))
-        else:
-            results_tags.append(['No Auto tags'])
-    text = []
-    for i in results:
-        text_to_show = " ".join(sent_tokenize(i)[:2])   # Get the at most 2 sentences from text of document to show them on screen
-        if text_to_show != '':
-            text.append(text_to_show + '....')
-        else:
-            # If we didn't get any text to show, that can be due to the very small document which doesn't
-            # contain any full stop. In that case, append whole text that document has.
-            text.append(i)
-    title = results_titles
-    summaries = results_summaries
-    tags = results_tags
-
-    title_len = len(title)
-
-    extension_list = []
-    for i in indexes:
-        extension_list.append(document_file[i]["extension"])
-    return render_template('searchbyText.html', text=text, tag=query, title=title, summaries=summaries, tags=tags,
-                           type=mystring, title_len=title_len, old_query=old_query, new_query=new_query,
-                           extension_list=extension_list)
 
 
 @app.route('/', methods=['POST'])
