@@ -59,7 +59,7 @@ __```HTML & CSS```__
 ```> cd IntelligentDocumentFinder```
 <br>
 <br>
-```> git clone https://github.com/Sarthakjain1206/Intelligent-Document-Finder```
+```> git clone https://github.com/Sarthakjain1206/Intelligent_Document_Finder_2.0.git```
 <br>
 
 Install Vitual Environment if not installed
