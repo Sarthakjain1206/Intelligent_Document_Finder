@@ -125,9 +125,20 @@ If you liked this repository, then do support it by giving it a __star__
 There are a lot of features that can be added to this tool. 
 
 1. __Query Segmentation__
-2. __Query Expansion__
-3. __Context-based Spell Checker__
+2. __Query Expansion__ (Mainly - __Pseudo Relevance Feedback technique__)
+3. __Improvising Spell Checker__
 4. __Collocations__ For example- Currently this project consider "New York" as ["New","York"] i.e two different words but it should be consider as a single entity like ["New_York"], this can definitely make a big difference in search results.
-5. __Search result's segmentation__ [like- Luecene]
+5. __Query Logs (Game changing technique for search engines)__
+6. __Search result's segmentation__ [like- Luecene]
 
 If you have any experience in implementing any of these features then, do __contribue__. 
+
+# References
+1. Awsome article of BM25 ranking algorithm on wikipedia -
+[Okapi BM25](https://en.wikipedia.org/wiki/Okapi_BM25)
+
+2. Read this article on [Topic Modeling](https://towardsdatascience.com/topic-modeling-and-latent-dirichlet-allocation-in-python-9bf156893c24)
+
+3. Completely followed this beautiful [article](https://medium.com/@acrosson/extract-subject-matter-of-documents-using-nlp-e284c1c61824) on SVOs tagging for generating tags for this project.
+
+4. Used the BM25 ranking fuction implementation from this great [repositry](https://github.com/dorianbrown/rank_bm25) on github by ```dorianbrown```.
