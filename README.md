@@ -125,9 +125,10 @@ If you liked this repository, then do support it by giving it a __star__
 There are a lot of features that can be added to this tool. 
 
 1. __Query Segmentation__
-2. __Query Expansion__
-3. __Context-based Spell Checker__
+2. __Query Expansion__ (Mainly - __Pseudo Relevance Feedback technique__)
+3. __Improvising Spell Checker__
 4. __Collocations__ For example- Currently this project consider "New York" as ["New","York"] i.e two different words but it should be consider as a single entity like ["New_York"], this can definitely make a big difference in search results.
-5. __Search result's segmentation__ [like- Luecene]
+5. __Query Logs (Game changing technique for search engines)__
+6. __Search result's segmentation__ [like- Luecene]
 
 If you have any experience in implementing any of these features then, do __contribue__. 
