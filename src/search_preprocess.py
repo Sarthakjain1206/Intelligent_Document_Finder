@@ -16,19 +16,18 @@ class Indexer:
         self.doc_freqs = []
         self.idf = {}
         self.doc_len = []
-
+        self.num_docs = 0
         nd = self.initialize_corpus(corpus)  # Number of documents with word.
         self.reverse_index = nd
         self.calc_idf(nd)
 
     def initialize_corpus(self, corpus):
         nd = {}
-        num_docs = 0
 
         for document in corpus:
             document_len = len(document)
             self.doc_len.append(document_len)
-            num_docs += document_len  # num_doc will calculate the value of total words in corpus.
+            self.num_docs += document_len  # num_doc will calculate the value of total words in corpus.
 
             frequencies = {}  # frequencies of word in current document.
 
@@ -43,7 +42,7 @@ class Indexer:
                     nd[word] = 0
                 nd[word] += 1  # nd will maintain Number of documents with a word
 
-        self.average_docs_len = num_docs / self.corpus_size  # calculating average doc length
+        self.average_docs_len = self.num_docs / self.corpus_size  # calculating average doc length
         return nd
 
     def calc_idf(self, nd):
@@ -78,7 +77,8 @@ class Indexer:
             'doc_len': self.doc_len,
             'k1': self.k1,
             'epsilon': self.epsilon,
-            'b': self.b
+            'b': self.b,
+            'num_docs': self.num_docs
         }
         print("=========================")
         print(self.search_type)
@@ -104,12 +104,12 @@ class UpdateIndexer:
         self.curr_average_idf = 0
 
     def update_indexer(self):
-        num_docs = 0
+
         for document in self.new_corpus:
             document_len = len(document)
             self.prev_search_data['doc_len'].append(document_len)
             self.prev_search_data['corpus_size'] += 1
-            num_docs += document_len  # num_doc will calculate the value of total words in corpus.
+            self.prev_search_data['num_docs'] += document_len  # num_doc will calculate the value of total words in corpus.
 
             frequencies = {}  # frequencies of word in current document.
 
@@ -123,13 +123,9 @@ class UpdateIndexer:
                 try:
                     self.prev_search_data['nd'][word] += 1
                 except KeyError:
-                    self.prev_search_data['nd'][word] = 0
-                    self.prev_search_data['nd'][word] += 1
-                # if word not in nd:
-                #     nd[word] = 0
-                # nd[word] += 1  # nd will maintain Number of documents with a word
+                    self.prev_search_data['nd'][word] = 1
 
-        self.prev_search_data['average_docs_len'] = num_docs / self.prev_search_data['corpus_size']  # calculating average doc length
+        self.prev_search_data['average_docs_len'] = self.prev_search_data['num_docs'] / self.prev_search_data['corpus_size']  # calculating average doc length
         # return nd
 
     def calc_idf(self):
@@ -161,12 +157,18 @@ class Search:
         print(data['corpus_size'])
 
     def get_top_n(self, query, documents, n=5):
-        print(len(documents))
         assert self.data['corpus_size'] == len(documents), "The documents given don't match the index corpus!"
 
         scores = self.get_scores(query)
         top_n = np.argsort(scores)[::-1][:n]
-        return top_n, [documents[i] for i in top_n]
+
+        index = 0
+        for i in top_n:
+            if scores[i] == 0:
+                break
+            index += 1
+
+        return top_n[:index], [documents[i] for i in top_n[:index]]
 
     def get_scores(self, query):
         """
