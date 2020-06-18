@@ -938,6 +938,9 @@ body{
     border: 0.5px solid #d4d4d4;
     border-right: none;
 }
+.search_bar:focus{
+    outline: none;
+}
 .search_bar::placeholder{
     font-weight: lighter;
 }
@@ -972,6 +975,9 @@ body{
     border-right: none;
     border-left: none;
     background-color: #fff;
+}
+.empty_button:focus{
+    outline: none;
 }
 .empty_button img{
     height: 2vh;
