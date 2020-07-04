@@ -6,10 +6,20 @@ import time
 import pickle
 from scipy.stats import entropy
 from scipy.spatial.distance import jensenshannon
+import os 
 
 print("Imported")
-corpus = pickle.load(open(r"Database\corpus_file.pkl", "rb"))
-
+def CorpusPlatFormloader():
+    corpus = None
+    if os.name == "posix":
+        with open(r"DataBase/corpus_file.pkl", "rb") as fp:
+            corpus = pickle.load(fp)
+    else:
+        with open(r"DataBase\corpus_file.pkl", "rb")as fp:
+            corpus = pickle.load(fp)
+    return corpus
+    
+corpus = CorpusPlatFormloader()
 
 def train_lda(corpus):
     num_topics = 100
