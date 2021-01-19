@@ -13,7 +13,6 @@ List of New Features--
 1. Implemented Document Similarity Script, which allows you to see related or most similar documents.
 2. Revamped website UI.
 3. Reduces time complexities of search functions.
-
 # What is Intelligent Document Finder <img src="https://img.icons8.com/color/48/000000/learning.png"/> ?
 How easy do you find it to remember the exact location of a document that you created last year? Not very easy, right? Big Organizations/people deal with hundreds of documents daily and forget about them, most of the time.
 <br>
@@ -21,6 +20,12 @@ But what if we want that old documentation again for some work, but unfortunatel
 <br>
 In such cases, use of a __Intelligent document finder__ can really make a huge difference. As, it can Search for the document(```semantically```) of your need based on a query input. This will not only help in faster access to the document, but will also help in grouping similar documents together and in analysing them.
 <br>
+
+<a href="https://youtu.be/fn4A2P1qpWM">Watch Project Demo: </a>
+
+[![Watch Demo](https://i9.ytimg.com/vi_webp/fn4A2P1qpWM/sddefault.webp?time=1611081000000&sqp=CKjKnIAG&rs=AOn4CLB-lc28zlEQXFLoJvb42qjBGUoWnQ)](https://youtu.be/fn4A2P1qpWM)
+
+
 # Note <img src="https://img.icons8.com/ios-filled/30/000000/note.png"/> 
 Currently this repositry is using predefined database of news articles gathered by web scraping. Due to the github restrictions on uploading the large files, we cannot upload it here. 
 <br><br>
