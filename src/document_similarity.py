@@ -8,7 +8,7 @@ from scipy.stats import entropy
 from scipy.spatial.distance import jensenshannon
 
 print("Imported")
-corpus = pickle.load(open(r"Database\corpus_file.pkl", "rb"))
+corpus = pickle.load(open(r"DataBase/corpus_file.pkl", "rb"))
 
 
 def train_lda(corpus):
