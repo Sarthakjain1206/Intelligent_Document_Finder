@@ -32,7 +32,7 @@ numpy==1.18.1
 olefile==0.46
 pandas==1.0.0
 pdfminer.six==20181108
-Pillow==7.0.0
+Pillow==9.0.1
 pycryptodome==3.9.6
 pyparsing==2.4.6
 PyPDF2==1.26.0
