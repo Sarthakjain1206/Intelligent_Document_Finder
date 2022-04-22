@@ -35,7 +35,7 @@ pdfminer.six==20181108
 Pillow==7.0.0
 pycryptodome==3.9.6
 pyparsing==2.4.6
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 pyspellchecker==0.5.3
 python-dateutil==2.8.1
 python-docx==0.8.10
